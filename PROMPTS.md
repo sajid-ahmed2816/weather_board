@@ -121,7 +121,7 @@ Display animated weather conditions using Lottie or CSS animations.
 - Added `prefers-reduced-motion` support for accessibility.
 
 ### Implementation
-- Component: `src/components/weather_animation/WeatherAnimation.tsx`
+- Component: `src/components/weather_animation/index.tsx`
 - Animation styles: `src/index.css`
 - Current weather: Integrated into the current weather section in `App.tsx`.
 - 5-day forecast: Integrated into each daily forecast card in `Forecast.tsx`.
