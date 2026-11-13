@@ -105,6 +105,31 @@ How can the dashboard remain usable across mobile, tablet, and desktop screen si
 
 Validated layouts at 375px, 768px, and 1280px, including mobile touch targets and interactive controls.
 
+
+## Animated Weather Conditions
+
+### Requirement
+Display animated weather conditions using Lottie or CSS animations.
+
+### Engineering Decision
+- Chose CSS animations instead of Lottie to keep the application lightweight.
+- Avoided adding an external animation dependency.
+- Created a reusable `WeatherAnimation` component.
+- Used Open-Meteo `weather_code` values to determine the animation.
+- Added support for sunny, partly cloudy, cloudy, foggy, drizzle, rainy, snowy, and thunderstorm conditions.
+- Added small and large animation sizes.
+- Added `prefers-reduced-motion` support for accessibility.
+
+### Implementation
+- Component: `src/components/weather_animation/WeatherAnimation.tsx`
+- Animation styles: `src/index.css`
+- Current weather: Integrated into the current weather section in `App.tsx`.
+- 5-day forecast: Integrated into each daily forecast card in `Forecast.tsx`.
+
+### Prompt / Instruction
+Implement lightweight, reusable CSS-based weather animations based on Open-Meteo weather codes. Use the same animation component for current weather and the 5-day forecast, with responsive sizing and reduced-motion accessibility support.
+
 ---
 
 These notes document selected engineering considerations and decisions made during WeatherBoard development.
+
