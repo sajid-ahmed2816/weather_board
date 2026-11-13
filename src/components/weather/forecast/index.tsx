@@ -1,6 +1,5 @@
 import { useTemperature } from "../../../context/TemperatureContext";
 import type { OpenMeteoResponse } from "../../../types/weather";
-import { getWeatherIcon } from "../../../utils/weather";
 import WeatherAnimation from "../../weather_animation";
 
 interface ForecastProps {

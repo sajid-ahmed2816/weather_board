@@ -20,7 +20,7 @@ import { TemperatureProvider, useTemperature } from "./context/TemperatureContex
 import { useWeather } from "./hooks/useWeather";
 import { useFavorites } from "./hooks/useFavorites";
 import { useOnlineStatus } from "./hooks/useOnlineStatus";
-import { getWeatherCondition, getWeatherIcon } from "./utils/weather";
+import { getWeatherCondition } from "./utils/weather";
 import type { City } from "./types/city";
 
 function Dashboard() {

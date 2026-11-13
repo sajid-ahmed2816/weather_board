@@ -12,29 +12,3 @@ export function getWeatherCondition(code: number): string {
 
   return "Unknown";
 }
-
-import {
-  Sun,
-  Cloud,
-  CloudSun,
-  CloudFog,
-  CloudDrizzle,
-  CloudRain,
-  CloudSnow,
-  CloudLightning,
-} from "lucide-react";
-
-export function getWeatherIcon(code: number) {
-  if (code === 0) return Sun;
-  if (code <= 1) return CloudSun;
-  if (code <= 3) return Cloud;
-  if (code <= 48) return CloudFog;
-  if (code <= 55) return CloudDrizzle;
-  if (code <= 67) return CloudRain;
-  if (code <= 77) return CloudSnow;
-  if (code <= 82) return CloudRain;
-  if (code <= 86) return CloudSnow;
-  if (code >= 95) return CloudLightning;
-
-  return Cloud;
-}
