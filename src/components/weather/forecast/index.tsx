@@ -1,6 +1,6 @@
 import { useTemperature } from "../../../context/TemperatureContext";
 import type { OpenMeteoResponse } from "../../../types/weather";
-import WeatherAnimation from "../../weather_animation";
+import WeatherAnimation from "../weather_animation";
 
 interface ForecastProps {
   daily: OpenMeteoResponse["daily"];

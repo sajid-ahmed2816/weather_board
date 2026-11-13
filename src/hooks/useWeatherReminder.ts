@@ -14,6 +14,20 @@ function getPermission(): ReminderPermission {
   return Notification.permission;
 }
 
+async function showWeatherNotification() {
+  if (!("serviceWorker" in navigator)) {
+    throw new Error("Service Worker is not supported.");
+  }
+
+  const registration = await navigator.serviceWorker.ready;
+
+  await registration.showNotification("WeatherBoard Daily Reminder", {
+    body: "Time to check your weather forecast!",
+    icon: "/pwa-192x192.png",
+    badge: "/pwa-192x192.png",
+  });
+}
+
 function getInitialTime(): string {
   try {
     return localStorage.getItem(TIME_STORAGE_KEY) ?? "08:00";
@@ -75,7 +89,17 @@ export function useWeatherReminder() {
       // Reminder still works during the current session
     }
 
-    setMessage(`Daily reminder enabled for ${time}.`);
+    try {
+      await showWeatherNotification();
+
+      setMessage(
+        `Daily reminder enabled for ${time}. Test notification sent.`,
+      );
+    } catch {
+      setMessage(
+        "Reminder enabled, but notification could not be displayed.",
+      );
+    }
   }
 
   function disableReminder() {
@@ -112,12 +136,11 @@ export function useWeatherReminder() {
       const delay = nextReminder.getTime() - now.getTime();
 
       timer = window.setTimeout(() => {
-        new Notification("WeatherBoard Daily Reminder", {
-          body: "Time to check your weather forecast!",
-          icon: "/pwa-192x192.png",
+        showWeatherNotification().catch((error) => {
+          console.error("Failed to show reminder:", error);
+        }).finally(() => {
+          scheduleNextReminder();
         });
-
-        scheduleNextReminder();
       }, delay);
     }
 

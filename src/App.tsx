@@ -13,7 +13,7 @@ import Header from "./components/layout/header";
 import CitySearch from "./components/search";
 import Forecast from "./components/weather/forecast";
 import Favorites from "./components/search/favorites";
-import WeatherAnimation from "./components/weather_animation";
+import WeatherAnimation from "./components/weather/weather_animation";
 import Skeleton from "./components/weather/skeleton";
 import { ThemeProvider } from "./context/ThemeContext";
 import { TemperatureProvider, useTemperature } from "./context/TemperatureContext";
