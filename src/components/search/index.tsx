@@ -1,6 +1,6 @@
 
 import { useEffect, useState, useRef, type SyntheticEvent, } from "react";
-import { Search } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 
 import { useDebounce } from "../../hooks/useDebounce";
 import { searchCities } from "../../services/geocoding";
@@ -123,13 +123,13 @@ export default function CitySearch({ onCitySelect }: CitySearchProps) {
   }
 
   return (
-    <div className="mx-auto mt-8 max-w-xl">
+    <div className="mx-auto mt-8 max-w-3xl">
       <form
         onSubmit={handleSubmit}
-        className="relative flex items-center gap-3 rounded-2xl border border-(--border) bg-(--surface) p-2 shadow-lg"
+        className="relative flex items-center gap-3 rounded-3xl border border-(--border) bg-(--surface) p-2 shadow-lg"
       >
-        <Search
-          size={20}
+        <MapPin
+          size={16}
           className="ml-3 shrink-0 text-(--muted)"
         />
 
@@ -146,13 +146,10 @@ export default function CitySearch({ onCitySelect }: CitySearchProps) {
           className="min-w-0 flex-1 bg-transparent py-3 text-sm text-(--text) outline-none placeholder:text-(--muted)"
         />
 
-        <button
-          type="submit"
-          disabled={query.trim().length < 2 || isSearching}
-          className="rounded-xl bg-(--accent) px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Search
-        </button>
+        <Search
+          size={20}
+          className="mr-3 shrink-0 text-(--muted)"
+        />
 
         {isOpen && query.trim().length >= 2 && (
           <CityDropdown

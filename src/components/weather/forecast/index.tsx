@@ -1,6 +1,7 @@
 import { useTemperature } from "../../../context/TemperatureContext";
 import type { OpenMeteoResponse } from "../../../types/weather";
 import { getWeatherIcon } from "../../../utils/weather";
+import WeatherAnimation from "../../weather_animation";
 
 interface ForecastProps {
   daily: OpenMeteoResponse["daily"];
@@ -21,15 +22,13 @@ export default function Forecast({ daily }: ForecastProps) {
   } = useTemperature();
 
   return (
-    <section className="mt-6 rounded-3xl border border-(--border) bg-(--surface) p-6 sm:p-8">
+    <section className="mt-5 rounded-3xl border border-(--border) bg-(--surface) p-6 sm:p-8">
       <h3 className="mb-6 text-lg font-semibold text-(--text)">
         5-Day Forecast
       </h3>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
         {daily.time.map((date, index) => {
-          const WeatherIcon = getWeatherIcon(daily.weather_code[index]);
-
           return (
             <div
               key={date}
@@ -46,9 +45,9 @@ export default function Forecast({ daily }: ForecastProps) {
                 })}
               </p>
 
-              <WeatherIcon
-                size={30}
-                className="my-4 text-(--accent)"
+              <WeatherAnimation
+                code={daily.weather_code[index]}
+                size="sm"
               />
 
               <div className="flex items-center gap-2">

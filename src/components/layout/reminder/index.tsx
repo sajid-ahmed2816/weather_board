@@ -16,17 +16,17 @@ export default function Reminder() {
   const [selectedTime, setSelectedTime] = useState(reminderTime);
 
   return (
-    <section className="mt-6 rounded-3xl border border-(--border) bg-(--surface) p-6 sm:p-8">
+    <div className="w-full">
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-(--surface-hover) text-(--accent)">
           <Bell size={21} />
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-(--text)">
+          <h3 className="text-base font-semibold text-(--text)">
             Daily Weather Reminder
           </h3>
-          <p className="text-sm text-(--muted)">
+          <p className="text-xs text-(--muted)">
             Get a daily reminder to check the weather.
           </p>
         </div>
@@ -40,8 +40,9 @@ export default function Reminder() {
           Choose reminder time
         </label>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <div className="relative flex-1">
+
+        <div className="flex flex-col gap-3">
+          <div className="relative w-full">
             <Clock
               size={18}
               className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-(--muted)"
@@ -56,26 +57,29 @@ export default function Reminder() {
             />
           </div>
 
-          <button
-            type="button"
-            onClick={() => enableReminder(selectedTime)}
-            className="flex h-12 items-center justify-center gap-2 rounded-xl bg-(--accent) px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          >
-            <Bell size={17} />
-            {isEnabled ? "Update Reminder" : "Enable Reminder"}
-          </button>
-
-          {isEnabled && (
+          <div className="flex w-full gap-2">
             <button
               type="button"
-              onClick={disableReminder}
-              className="flex h-12 items-center justify-center gap-2 rounded-xl border border-(--border) px-5 text-sm font-semibold text-(--text) transition-colors hover:bg-(--surface-hover)"
+              onClick={() => enableReminder(selectedTime)}
+              className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-(--accent) px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
             >
-              <BellOff size={17} />
-              Disable
+              <Bell size={17} />
+              {isEnabled ? "Update" : "Enable"}
             </button>
-          )}
+
+            {isEnabled && (
+              <button
+                type="button"
+                onClick={disableReminder}
+                className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-(--border) px-3 text-[12px] font-semibold text-(--text) transition-colors hover:bg-(--surface-hover)"
+              >
+                <BellOff size={17} />
+                Disable
+              </button>
+            )}
+          </div>
         </div>
+
       </div>
 
       {message && (
@@ -101,6 +105,6 @@ export default function Reminder() {
         This version requires the browser to remain running. Closed-app
         reminders require a push notification service.
       </p>
-    </section>
+    </div>
   );
 }

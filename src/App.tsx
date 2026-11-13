@@ -6,13 +6,14 @@ import {
   Droplets,
   Wind,
   Thermometer,
+  Heart,
 } from "lucide-react";
 
 import Header from "./components/layout/header";
 import CitySearch from "./components/search";
 import Forecast from "./components/weather/forecast";
-import Favorites from "./components/weather/favorites";
-import Reminder from "./components/weather/reminder";
+import Favorites from "./components/search/favorites";
+import WeatherAnimation from "./components/weather_animation";
 import Skeleton from "./components/weather/skeleton";
 import { ThemeProvider } from "./context/ThemeContext";
 import { TemperatureProvider, useTemperature } from "./context/TemperatureContext";
@@ -86,7 +87,7 @@ function Dashboard() {
       )}
 
       <main className="mx-auto max-w-360 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
-        <section className="mx-auto max-w-3xl text-center">
+        <section className="mx-auto max-w-4xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-sm text-(--muted)">
             <Cloud size={16} className="text-(--accent)" />
             Weather at a glance
@@ -97,22 +98,21 @@ function Dashboard() {
             <span className="text-(--accent)">in weather.</span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-(--muted) sm:text-base">
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-6 text-(--muted) sm:text-base">
             Stay ahead of the weather. Search any city to explore current
             conditions and upcoming forecasts.
           </p>
 
           <CitySearch onCitySelect={setSelectedCity} />
+
+          <Favorites
+            favorites={favorites}
+            selectedCityId={selectedCity?.id ?? null}
+            onCitySelect={setSelectedCity}
+            onRemove={removeFavorite}
+          />
         </section>
 
-        <Favorites
-          favorites={favorites}
-          selectedCityId={selectedCity?.id ?? null}
-          onCitySelect={setSelectedCity}
-          onRemove={removeFavorite}
-        />
-
-        <Reminder />
 
         <section className="mt-16">
           <div className="flex items-center justify-between mb-6">
@@ -148,31 +148,51 @@ function Dashboard() {
 
           {selectedCity && (
             <div className="rounded-3xl border border-(--border) bg-(--surface) p-6 sm:p-8">
-              <div className="mb-8">
-                <div className="flex items-center gap-2 text-sm text-(--muted)">
-                  <MapPin size={16} />
-                  {selectedCity.region}, {selectedCity.country}
+              <div className="mb-5">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="flex items-center gap-2 text-sm text-(--muted)">
+                      <MapPin size={16} />
+                      {selectedCity.region}, {selectedCity.country}
+                    </div>
+
+                    <h4 className="mt-2 text-2xl font-bold text-(--text)">
+                      {selectedCity.city}
+                    </h4>
+                  </div>
+
+
+                  <button
+                    type="button"
+                    onClick={() => addFavorite(selectedCity)}
+                    disabled={
+                      isFavorite(selectedCity.id) ||
+                      favorites.length >= maxFavorites
+                    }
+                    aria-label={
+                      isFavorite(selectedCity.id)
+                        ? "Added to favorites"
+                        : favorites.length >= maxFavorites
+                          ? "Maximum favorites reached"
+                          : "Add to favorites"
+                    }
+                    title={
+                      isFavorite(selectedCity.id)
+                        ? "Added to favorites"
+                        : favorites.length >= maxFavorites
+                          ? "Maximum 5 favorites"
+                          : "Add to favorites"
+                    }
+                    className="rounded-xl bg-(--accent) p-2.5 text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {isFavorite(selectedCity.id) ? (
+                      <Heart fill="currentColor" size={20} />
+                    ) : (
+                      <Heart size={20} />
+                    )}
+                  </button>
+
                 </div>
-
-                <h4 className="mt-2 text-2xl font-bold text-(--text)">
-                  {selectedCity.city}
-                </h4>
-
-                <button
-                  type="button"
-                  onClick={() => addFavorite(selectedCity)}
-                  disabled={
-                    isFavorite(selectedCity.id) ||
-                    favorites.length >= maxFavorites
-                  }
-                  className="mt-4 rounded-xl bg-(--accent) px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {isFavorite(selectedCity.id)
-                    ? "Added to Favorites"
-                    : favorites.length >= maxFavorites
-                      ? "Maximum 5 Favorites"
-                      : "Add to Favorites"}
-                </button>
               </div>
 
               {isLoading && (
@@ -201,22 +221,16 @@ function Dashboard() {
 
               {weather && !isLoading && !error && (
                 <>
-                  <div className="mb-8">
+                  <div className="mb-5">
                     <p className="text-sm text-(--muted)">
                       Current temperature
                     </p>
 
                     <div className="mt-2 flex items-center gap-3">
-                      {(() => {
-                        const WeatherIcon = getWeatherIcon(weather.current.weather_code);
-
-                        return (
-                          <WeatherIcon
-                            size={42}
-                            className="text-(--accent)"
-                          />
-                        );
-                      })()}
+                      <WeatherAnimation
+                        code={weather.current.weather_code}
+                        size="sm"
+                      />
 
                       <span className="text-5xl font-bold tracking-tight text-(--text)">
                         {convertTemperature(weather.current.temperature_2m)}°{unit === "celsius" ? "C" : "F"}
