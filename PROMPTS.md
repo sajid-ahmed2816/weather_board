@@ -21,7 +21,20 @@ How can an AI-assisted development workflow remain understandable and maintainab
 
 Used ChatGPT as a development assistant while reviewing, implementing, and testing changes incrementally. Technical decisions and relevant debugging outcomes were documented rather than preserving every conversation or routine coding step.
 
-## 2. Technology Stack
+## 2. Representative Prompts Used
+
+The following are representative examples of prompts used during development. They are paraphrased to summarize the actual development discussions rather than reproduce complete chat transcripts.
+
+- How should I implement city autocomplete with a 300ms debounce, API error handling, and cancellation of outdated requests?
+- How can I structure current weather and five-day forecast data using reusable React components, hooks, and TypeScript types?
+- How should I implement favorites with a maximum limit of five cities and graceful localStorage error handling?
+- How can I configure a Vite PWA with Workbox to cache weather API responses and support offline access?
+- Why are notifications not appearing in an installed Android PWA, and how should Service Worker notifications be implemented?
+- How can I create lightweight CSS weather animations with support for reduced-motion preferences?
+
+These examples summarize the types of guidance requested from ChatGPT throughout development.
+
+## 3. Technology Stack
 
 **Engineering consideration:**
 
@@ -35,7 +48,7 @@ What frontend stack would support a responsive, installable weather dashboard wi
 - CSS variables for theme management
 - Lucide React for icons
 
-## 3. Geocoding API — Incorrect City Resolution
+## 4. Geocoding API — Incorrect City Resolution
 
 **Problem:**
 
@@ -59,7 +72,7 @@ The issue was with geocoding provider results, not the weather API. The weather 
 - Filtered results using populated-place feature codes to avoid irrelevant airports and landmarks.
 - Preserved the existing `searchCities()` interface to minimize changes across the application.
 
-## 4. City Search Optimization
+## 5. City Search Optimization
 
 **Engineering consideration:**
 
@@ -72,7 +85,7 @@ How can autocomplete requests be optimized while users type without producing un
 - Added loading, error, and empty-result states.
 - Required users to select a suggested city rather than treating arbitrary input as a valid selection.
 
-## 5. Weather Data Architecture
+## 6. Weather Data Architecture
 
 **Engineering consideration:**
 
@@ -84,7 +97,7 @@ Separated responsibilities into weather services, type definitions, reusable hoo
 
 Used Open-Meteo forecast data for current weather and daily forecasts.
 
-## 6. Persistent User Preferences
+## 7. Persistent User Preferences
 
 **Engineering consideration:**
 
@@ -98,7 +111,7 @@ How can favorites, theme preferences, temperature units, and other user settings
 - Limited favorite cities to five.
 - Added city selection and removal confirmation.
 
-## 7. PWA, Service Workers & Offline Caching
+## 8. PWA, Service Workers & Offline Caching
 
 **Engineering consideration:**
 
@@ -125,7 +138,7 @@ The development server does not provide the same production service-worker behav
 
 Used a production build and preview/deployed application for meaningful service-worker and offline-cache testing.
 
-## 8. Mobile PWA Installation & Secure Context
+## 9. Mobile PWA Installation & Secure Context
 
 **Problem:**
 
@@ -146,7 +159,7 @@ Service workers require a secure context. An ordinary LAN IP accessed over HTTP 
 - Tested PWA installation and service-worker behavior using the deployed URL.
 - Verified mobile installation and offline behavior on the deployed application.
 
-## 9. Browser-Based Daily Weather Reminder
+## 10. Browser-Based Daily Weather Reminder
 
 **Engineering consideration:**
 
@@ -184,7 +197,7 @@ Reliable scheduled notifications when the application is not running require a s
 
 The current implementation should therefore be described as a browser-based reminder, not guaranteed background push delivery.
 
-## 10. Responsive Layout & Mobile Usability
+## 11. Responsive Layout & Mobile Usability
 
 **Engineering consideration:**
 
@@ -199,7 +212,7 @@ How can the dashboard remain usable across mobile, tablet, and desktop screen si
 - Checked mobile interaction targets and horizontal overflow.
 - Tested the deployed PWA on Android.
 
-## 11. Animated Weather Conditions
+## 12. Animated Weather Conditions
 
 **Requirement:**
 
@@ -225,7 +238,7 @@ Chose CSS animations to avoid an additional animation dependency and keep the ap
 - Current weather integration: `src/App.tsx`
 - Forecast integration: `Forecast.tsx`
 
-## 12. Deployment & Verification
+## 13. Deployment & Verification
 
 **Engineering consideration:**
 
