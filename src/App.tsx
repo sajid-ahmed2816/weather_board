@@ -226,7 +226,7 @@ function Dashboard() {
                       Current temperature
                     </p>
 
-                    <div className="mt-2 flex items-center gap-3">
+                    <div className="mt-2 flex justify-between sm:justify-start items-center flex-wrap gap-3">
                       <WeatherAnimation
                         code={weather.current.weather_code}
                         size="sm"
@@ -240,7 +240,7 @@ function Dashboard() {
                         {getWeatherCondition(weather.current.weather_code)}
                       </p>
 
-                      <span className="text-sm text-(--muted)">
+                      <span className="ml-auto sm:ml-0 text-sm text-(--muted)">
                         {weather.current.is_day ? "Daytime" : "Nighttime"}
                       </span>
                     </div>
