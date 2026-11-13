@@ -4,27 +4,41 @@ import type { City } from "../types/city";
 const STORAGE_KEY = "weatherboard-favorites";
 const MAX_FAVORITES = 5;
 
-function getInitialFavorites(): City[] {
+interface FavoritesStorageState {
+  favorites: City[];
+  storageAvailable: boolean;
+}
+
+function getInitialFavorites(): FavoritesStorageState {
   try {
     const savedFavorites = localStorage.getItem(STORAGE_KEY);
 
-    if (!savedFavorites) return [];
+    if (!savedFavorites) {
+      return { favorites: [], storageAvailable: true };
+    }
 
     const parsedFavorites: unknown = JSON.parse(savedFavorites);
 
     if (Array.isArray(parsedFavorites)) {
-      return parsedFavorites.slice(0, MAX_FAVORITES) as City[];
+      return {
+        favorites: parsedFavorites.slice(0, MAX_FAVORITES) as City[],
+        storageAvailable: true,
+      };
     }
 
-    return [];
+    return { favorites: [], storageAvailable: true };
   } catch {
-    return [];
+    return { favorites: [], storageAvailable: false };
   }
 }
 
 export function useFavorites() {
+  const [initialState] = useState(getInitialFavorites);
   const [favorites, setFavorites] = useState<City[]>(
-    getInitialFavorites,
+    initialState.favorites,
+  );
+  const [isStorageAvailable, setIsStorageAvailable] = useState(
+    initialState.storageAvailable,
   );
 
   useEffect(() => {
@@ -33,8 +47,9 @@ export function useFavorites() {
         STORAGE_KEY,
         JSON.stringify(favorites),
       );
+      setIsStorageAvailable(true);
     } catch {
-      // Favorites still work during the current session
+      setIsStorageAvailable(false);
     }
   }, [favorites]);
 
@@ -68,5 +83,6 @@ export function useFavorites() {
     removeFavorite,
     isFavorite,
     maxFavorites: MAX_FAVORITES,
+    isStorageAvailable,
   };
 }

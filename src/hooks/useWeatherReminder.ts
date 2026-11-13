@@ -19,6 +19,7 @@ async function showWeatherNotification() {
   }
 
   const registration = await navigator.serviceWorker.ready;
+  console.log("Service Worker ready:", registration);
 
   await registration.showNotification("WeatherBoard Daily Reminder", {
     body: "Time to check your weather forecast!",
@@ -64,6 +65,7 @@ export function useWeatherReminder() {
     }
 
     let currentPermission = Notification.permission;
+    console.log("🚀 ~ enableReminder ~ currentPermission:", currentPermission)
 
     if (currentPermission === "default") {
       currentPermission = await Notification.requestPermission();
@@ -80,6 +82,7 @@ export function useWeatherReminder() {
 
     setReminderTime(time);
     setIsEnabled(true);
+    console.log("Reminder state enabled");
 
     try {
       localStorage.setItem(TIME_STORAGE_KEY, time);

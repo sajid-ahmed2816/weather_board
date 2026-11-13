@@ -32,6 +32,12 @@ export default function Reminder() {
         </div>
       </div>
 
+      <p className="mt-4 text-sm leading-6 text-(--muted)">
+        WeatherBoard needs notification permission to send you a daily
+        reminder at your selected time. You can change or disable this
+        reminder anytime.
+      </p>
+
       <div className="mt-6">
         <label
           htmlFor="reminder-time"
@@ -60,7 +66,10 @@ export default function Reminder() {
           <div className="flex w-full gap-2">
             <button
               type="button"
-              onClick={() => enableReminder(selectedTime)}
+              onClick={() => {
+                console.log("Enable button clicked");
+                enableReminder(selectedTime)
+              }}
               className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-(--accent) px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
             >
               <Bell size={17} />

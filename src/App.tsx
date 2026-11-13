@@ -55,6 +55,7 @@ function Dashboard() {
     removeFavorite,
     isFavorite,
     maxFavorites,
+    isStorageAvailable
   } = useFavorites();
 
   const {
@@ -111,6 +112,15 @@ function Dashboard() {
             onCitySelect={setSelectedCity}
             onRemove={removeFavorite}
           />
+
+          {!isStorageAvailable && (
+            <p
+              role="status"
+              className="mt-2 text-xs text-amber-500"
+            >
+              Browser storage is unavailable. Favorites will only be saved for this session.
+            </p>
+          )}
         </section>
 
 
