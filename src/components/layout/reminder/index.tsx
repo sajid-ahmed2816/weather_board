@@ -66,10 +66,7 @@ export default function Reminder() {
           <div className="flex w-full gap-2">
             <button
               type="button"
-              onClick={() => {
-                console.log("Enable button clicked");
-                enableReminder(selectedTime)
-              }}
+              onClick={() => enableReminder(selectedTime)}
               className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-(--accent) px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
             >
               <Bell size={17} />

@@ -7,12 +7,10 @@ export function useOnlineStatus() {
 
   useEffect(() => {
     function handleOnline() {
-      console.log("Browser detected: ONLINE");
       setIsOnline(true);
     }
 
     function handleOffline() {
-      console.log("Browser detected: OFFLINE");
       setIsOnline(false);
     }
 
