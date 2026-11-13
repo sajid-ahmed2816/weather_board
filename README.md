@@ -39,6 +39,24 @@ WeatherBoard uses free Open-Meteo APIs. No API key is required.
 - **Geocoding API:** https://geocoding-api.open-meteo.com/
 - **Weather Forecast API:** https://open-meteo.com/
 
+## Environment Variables
+
+WeatherBoard uses environment variables for API configuration.
+
+Create a `.env.local` file in the project root:
+
+```env
+VITE_GEOCODING_BASE_URL=https://geocoding-api.open-meteo.com/v1/search
+```
+
+The application reads this variable using:
+
+```ts
+const GEOCODING_BASE_URL = import.meta.env.VITE_GEOCODING_BASE_URL;
+```
+
+**Note:** Restart the development server after changing environment variables. Never store private API keys or secrets in variables prefixed with `VITE_`, because they are exposed to the browser.
+
 ## Getting Started
 
 ### Prerequisites
